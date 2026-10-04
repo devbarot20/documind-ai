@@ -12,7 +12,6 @@ import {
   MessageSquare,
   BookOpen,
   Layers,
-  FileCheck,
 } from 'lucide-react';
 import { chatApi, documentApi } from '../services/api';
 import type { Conversation, Message, Document } from '../types';

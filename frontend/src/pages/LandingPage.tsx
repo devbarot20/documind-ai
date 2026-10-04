@@ -11,7 +11,6 @@ import {
   FileCheck2,
   Sparkles,
   Zap,
-  Layers,
 } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
