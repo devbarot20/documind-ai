@@ -143,40 +143,40 @@ export const ChatPage: React.FC = () => {
   };
 
   return (
-    <div className="flex h-[calc(100vh-6.5rem)] max-w-7xl mx-auto gap-5">
+    <div className="flex h-[calc(100vh-6.5rem)] max-w-7xl mx-auto gap-4">
       {/* Sidebar - Sessions & Knowledge Scope */}
-      <div className="hidden lg:flex flex-col w-72 glass-panel rounded-3xl p-4 space-y-4">
+      <div className="hidden lg:flex flex-col w-72 bg-white rounded-2xl border border-slate-200 p-4 space-y-4 shadow-2xs">
         <button
           onClick={handleNewChat}
-          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-medium py-3 px-4 rounded-2xl transition shadow-lg shadow-indigo-600/20 active:scale-[0.98] text-xs uppercase tracking-wider"
+          className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 rounded-xl transition shadow-2xs active:scale-[0.98] text-xs uppercase tracking-wider"
         >
           <Plus className="w-4 h-4" />
           <span>New Session</span>
         </button>
 
         {/* Scope selector */}
-        <div className="space-y-1.5 pt-2 border-t border-white/[0.06]">
-          <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 px-1">
-            <Layers className="w-3.5 h-3.5 text-indigo-400" />
-            <span>Document Filter</span>
+        <div className="space-y-1.5 pt-2 border-t border-slate-100">
+          <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5 px-1">
+            <Layers className="w-3.5 h-3.5 text-indigo-600" />
+            <span>Document Scope</span>
           </label>
           <select
             value={selectedDocId}
             onChange={(e) => setSelectedDocId(e.target.value)}
-            className="w-full bg-[#0b0f19] border border-white/[0.08] text-slate-200 text-xs rounded-xl p-2.5 focus:outline-none focus:border-indigo-500/50 truncate"
+            className="w-full bg-slate-50 border border-slate-200 text-slate-800 text-xs rounded-xl p-2.5 focus:outline-none focus:border-indigo-500 truncate"
           >
             <option value="all">All Documents ({userDocuments.length})</option>
             {userDocuments.map((doc) => (
               <option key={doc.id} value={doc.id}>
-                📄 {doc.original_filename}
+                {doc.original_filename}
               </option>
             ))}
           </select>
         </div>
 
         {/* History */}
-        <div className="flex-1 overflow-y-auto space-y-1 pt-2 border-t border-white/[0.06]">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-1">
+        <div className="flex-1 overflow-y-auto space-y-1 pt-2 border-t border-slate-100">
+          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-1">
             Past Conversations
           </span>
           {conversations.map((conv) => {
@@ -185,13 +185,13 @@ export const ChatPage: React.FC = () => {
               <button
                 key={conv.id}
                 onClick={() => loadConversation(conv.id)}
-                className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium text-left transition ${
+                className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-left transition ${
                   isActive
-                    ? 'bg-indigo-600/15 text-indigo-300 border border-indigo-500/30'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]'
+                    ? 'bg-indigo-50 text-indigo-700 border border-indigo-100 font-semibold'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
-                <MessageSquare className="w-3.5 h-3.5 shrink-0 text-slate-500" />
+                <MessageSquare className="w-3.5 h-3.5 shrink-0 text-slate-400" />
                 <span className="truncate flex-1">{conv.title}</span>
               </button>
             );
@@ -200,19 +200,19 @@ export const ChatPage: React.FC = () => {
       </div>
 
       {/* Main Chat Interface */}
-      <div className="flex-1 flex flex-col glass-panel rounded-3xl overflow-hidden border border-white/[0.08] shadow-2xl">
+      <div className="flex-1 flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-2xs">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06] bg-[#090d16]/80">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-100 bg-slate-50/50">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="p-2.5 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl text-indigo-400 shrink-0">
-              <BrainCircuit className="w-5 h-5" />
+            <div className="p-2 bg-indigo-50 border border-indigo-100 rounded-xl text-indigo-600 shrink-0">
+              <BrainCircuit className="w-4 h-4" />
             </div>
             <div className="min-w-0">
-              <h2 className="font-bold text-white text-sm truncate">
+              <h2 className="font-bold text-slate-900 text-xs sm:text-sm truncate">
                 {currentConversation?.title || 'DocuMind Assistant'}
               </h2>
-              <div className="flex items-center gap-2 text-[11px] text-slate-400 mt-0.5">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="flex items-center gap-2 text-[11px] text-slate-500 mt-0.5">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500" />
                 <span className="truncate">
                   {selectedDocId === 'all'
                     ? `Searching across ${userDocuments.length} ready documents`
@@ -224,28 +224,28 @@ export const ChatPage: React.FC = () => {
 
           <button
             onClick={handleNewChat}
-            className="lg:hidden p-2 text-indigo-400 bg-indigo-500/10 rounded-xl border border-indigo-500/20"
+            className="lg:hidden p-2 text-indigo-600 bg-indigo-50 rounded-xl border border-indigo-100"
             title="New Chat"
           >
-            <Plus className="w-5 h-5" />
+            <Plus className="w-4 h-4" />
           </button>
         </div>
 
         {/* Message Thread */}
         <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
           {loading ? (
-            <div className="h-full flex items-center justify-center text-slate-500 text-sm">
-              <Loader2 className="w-5 h-5 animate-spin mr-2 text-indigo-400" />
-              Loading session...
+            <div className="h-full flex items-center justify-center text-slate-400 text-xs">
+              <Loader2 className="w-4 h-4 animate-spin mr-2 text-indigo-600" />
+              Loading conversation session...
             </div>
           ) : messages.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-4 max-w-md mx-auto">
-              <div className="p-4 bg-indigo-500/10 border border-indigo-500/20 rounded-3xl text-indigo-400 glow-indigo">
-                <Sparkles className="w-8 h-8" />
+            <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-3 max-w-sm mx-auto">
+              <div className="p-3.5 bg-indigo-50 border border-indigo-100 rounded-2xl text-indigo-600">
+                <Sparkles className="w-6 h-6" />
               </div>
-              <div className="space-y-1.5">
-                <h3 className="text-base font-bold text-white">Ask your documents anything</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold text-slate-900">Ask your documents anything</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">
                   Type a natural-language question below to query your uploaded PDFs with source citations.
                 </p>
               </div>
@@ -259,7 +259,7 @@ export const ChatPage: React.FC = () => {
                 }`}
               >
                 {msg.role === 'assistant' && (
-                  <div className="w-8 h-8 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 flex items-center justify-center text-white shrink-0 shadow-md">
+                  <div className="w-7 h-7 rounded-xl bg-indigo-600 flex items-center justify-center text-white shrink-0 shadow-2xs">
                     <BrainCircuit className="w-4 h-4" />
                   </div>
                 )}
@@ -267,18 +267,18 @@ export const ChatPage: React.FC = () => {
                 <div
                   className={`max-w-[85%] sm:max-w-[78%] space-y-3 ${
                     msg.role === 'user'
-                      ? 'bg-indigo-600 text-white p-4 rounded-2xl rounded-tr-none shadow-lg font-medium text-sm'
-                      : 'bg-[#0c101a] border border-white/[0.08] p-4 sm:p-5 rounded-2xl rounded-tl-none shadow-xl text-slate-200 text-sm'
+                      ? 'bg-slate-900 text-white p-4 rounded-2xl rounded-tr-xs shadow-xs font-normal text-xs sm:text-sm'
+                      : 'bg-slate-50 border border-slate-200 p-4 sm:p-5 rounded-2xl rounded-tl-xs shadow-2xs text-slate-800 text-xs sm:text-sm'
                   }`}
                 >
-                  <div className="prose prose-invert prose-sm max-w-none leading-relaxed">
+                  <div className={`prose-light max-w-none leading-relaxed ${msg.role === 'user' ? 'text-white' : ''}`}>
                     <ReactMarkdown>{msg.content}</ReactMarkdown>
                   </div>
 
                   {/* Sources section */}
                   {msg.role === 'assistant' && msg.sources && msg.sources.length > 0 && (
-                    <div className="pt-3 border-t border-white/[0.08] space-y-2">
-                      <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-indigo-400">
+                    <div className="pt-3 border-t border-slate-200/80 space-y-2">
+                      <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-indigo-700">
                         <BookOpen className="w-3.5 h-3.5" />
                         <span>Source References ({msg.sources.length})</span>
                       </div>
@@ -292,15 +292,15 @@ export const ChatPage: React.FC = () => {
 
                   {/* Actions */}
                   {msg.role === 'assistant' && (
-                    <div className="flex items-center justify-end gap-2 pt-1 text-slate-500 text-xs">
+                    <div className="flex items-center justify-end gap-2 pt-1 text-slate-400 text-xs">
                       <button
                         onClick={() => handleCopy(msg.content, index)}
-                        className="hover:text-slate-300 transition flex items-center gap-1 text-[11px]"
+                        className="hover:text-slate-700 transition flex items-center gap-1 text-[11px]"
                       >
                         {copiedIndex === index ? (
                           <>
-                            <Check className="w-3.5 h-3.5 text-emerald-400" />
-                            <span className="text-emerald-400">Copied</span>
+                            <Check className="w-3.5 h-3.5 text-emerald-600" />
+                            <span className="text-emerald-600 font-medium">Copied</span>
                           </>
                         ) : (
                           <>
@@ -317,11 +317,11 @@ export const ChatPage: React.FC = () => {
           )}
 
           {sending && (
-            <div className="flex items-center gap-3 text-slate-400 text-xs py-2">
-              <div className="w-8 h-8 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
-                <Loader2 className="w-4 h-4 animate-spin" />
+            <div className="flex items-center gap-2.5 text-slate-500 text-xs py-2">
+              <div className="w-7 h-7 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-600">
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
               </div>
-              <span className="animate-pulse">Retrieving vector context & generating response...</span>
+              <span className="animate-pulse">Searching vector indexes & synthesizing response...</span>
             </div>
           )}
 
@@ -329,26 +329,26 @@ export const ChatPage: React.FC = () => {
         </div>
 
         {/* Input Bar */}
-        <div className="p-4 border-t border-white/[0.06] bg-[#090d16]/90">
+        <div className="p-3.5 border-t border-slate-100 bg-white">
           <form
             onSubmit={(e) => {
               e.preventDefault();
               handleSendMessage();
             }}
-            className="flex items-center gap-2 bg-[#0b0f19] border border-white/[0.08] rounded-2xl p-2 focus-within:border-indigo-500/50 transition shadow-inner"
+            className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl p-1.5 focus-within:border-indigo-500 transition"
           >
             <input
               type="text"
-              placeholder="Ask a question about your uploaded documents..."
+              placeholder="Ask a question about your documents..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               disabled={sending}
-              className="flex-1 bg-transparent px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none"
+              className="flex-1 bg-transparent px-3 py-1.5 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none"
             />
             <button
               type="submit"
               disabled={!input.trim() || sending}
-              className="p-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl transition shadow-md shadow-indigo-600/20 disabled:opacity-40 shrink-0"
+              className="p-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-2xs disabled:opacity-40 shrink-0"
             >
               {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
             </button>

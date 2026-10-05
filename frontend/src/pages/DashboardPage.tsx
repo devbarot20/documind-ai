@@ -73,26 +73,24 @@ export const DashboardPage: React.FC = () => {
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Hero Welcome Banner */}
-      <div className="relative overflow-hidden glass-panel p-8 rounded-3xl border border-white/[0.08] shadow-2xl">
-        <div className="absolute -right-10 -bottom-10 w-96 h-96 bg-gradient-to-br from-indigo-600/15 via-purple-600/10 to-transparent blur-3xl pointer-events-none rounded-full" />
-
+      <div className="relative overflow-hidden bg-white p-8 rounded-3xl border border-slate-200 shadow-2xs">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-indigo-300 text-xs font-semibold">
-              <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50 border border-indigo-200 rounded-full text-indigo-700 text-xs font-semibold">
+              <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
               <span>DocuMind Intelligence Hub</span>
             </div>
-            <h1 className="text-3xl font-extrabold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
               Welcome back, {user?.name}
             </h1>
-            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
-              Upload your documents, manage vector search indexes, and query your knowledge base.
+            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+              Upload PDF documents, manage vector search indexes, and query your knowledge base.
             </p>
           </div>
 
           <button
             onClick={() => setUploadModalOpen(true)}
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-medium py-3.5 px-6 rounded-2xl transition shadow-xl shadow-indigo-600/25 active:scale-[0.98] text-xs uppercase tracking-wider shrink-0"
+            className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-5 rounded-xl transition shadow-xs active:scale-[0.98] text-xs uppercase tracking-wider shrink-0"
           >
             <UploadCloud className="w-4 h-4" />
             <span>Upload Document</span>
@@ -102,62 +100,62 @@ export const DashboardPage: React.FC = () => {
 
       {/* Metrics Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="glass-panel p-5 rounded-3xl border border-white/[0.08] glass-panel-hover">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Files</span>
-            <div className="p-2.5 bg-indigo-500/10 text-indigo-400 rounded-2xl border border-indigo-500/20">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Files</span>
+            <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl border border-indigo-100">
               <FileText className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-4">
-            <span className="text-3xl font-bold text-white tracking-tight">
+          <div className="mt-3">
+            <span className="text-3xl font-bold text-slate-900 tracking-tight">
               {loading ? '-' : stats?.total || 0}
             </span>
           </div>
         </div>
 
-        <div className="glass-panel p-5 rounded-3xl border border-white/[0.08] glass-panel-hover">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Processing</span>
-            <div className="p-2.5 bg-amber-500/10 text-amber-400 rounded-2xl border border-amber-500/20">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Processing</span>
+            <div className="p-2.5 bg-amber-50 text-amber-600 rounded-xl border border-amber-100">
               <Clock className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-4 flex items-center justify-between">
-            <span className="text-3xl font-bold text-white tracking-tight">
+          <div className="mt-3 flex items-center justify-between">
+            <span className="text-3xl font-bold text-slate-900 tracking-tight">
               {loading ? '-' : stats?.processing || 0}
             </span>
             {stats?.processing ? stats.processing > 0 && (
-              <span className="flex items-center gap-1.5 text-xs text-amber-400 font-semibold animate-pulse">
+              <span className="flex items-center gap-1.5 text-xs text-amber-700 font-semibold animate-pulse">
                 <Loader2 className="w-3.5 h-3.5 animate-spin" /> In Progress
               </span>
             ) : null}
           </div>
         </div>
 
-        <div className="glass-panel p-5 rounded-3xl border border-white/[0.08] glass-panel-hover">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Ready for Chat</span>
-            <div className="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-2xl border border-emerald-500/20">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Ready for Chat</span>
+            <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl border border-emerald-100">
               <CheckCircle2 className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-4">
-            <span className="text-3xl font-bold text-white tracking-tight">
+          <div className="mt-3">
+            <span className="text-3xl font-bold text-slate-900 tracking-tight">
               {loading ? '-' : stats?.completed || 0}
             </span>
           </div>
         </div>
 
-        <div className="glass-panel p-5 rounded-3xl border border-white/[0.08] glass-panel-hover">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Storage Index</span>
-            <div className="p-2.5 bg-purple-500/10 text-purple-400 rounded-2xl border border-purple-500/20">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Storage Index</span>
+            <div className="p-2.5 bg-slate-50 text-slate-700 rounded-xl border border-slate-200">
               <HardDrive className="w-4 h-4" />
             </div>
           </div>
-          <div className="mt-4">
-            <span className="text-3xl font-bold text-white tracking-tight">
+          <div className="mt-3">
+            <span className="text-3xl font-bold text-slate-900 tracking-tight">
               {loading ? '-' : formatFileSize(stats?.total_size || 0)}
             </span>
           </div>
@@ -167,17 +165,17 @@ export const DashboardPage: React.FC = () => {
       {/* Main Lists Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Recent Documents */}
-        <div className="glass-panel p-6 rounded-3xl border border-white/[0.08] space-y-4">
+        <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 bg-indigo-500/10 text-indigo-400 rounded-xl">
+              <div className="p-2 bg-indigo-50 text-indigo-600 rounded-xl border border-indigo-100">
                 <FileText className="w-4 h-4" />
               </div>
-              <h2 className="text-base font-bold text-white">Recent Documents</h2>
+              <h2 className="text-base font-bold text-slate-900">Recent Documents</h2>
             </div>
             <button
               onClick={() => navigate('/app/documents')}
-              className="text-xs text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1 transition"
+              className="text-xs text-indigo-600 hover:text-indigo-700 font-semibold flex items-center gap-1 transition"
             >
               <span>View all</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -185,57 +183,57 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           {loading ? (
-            <div className="py-12 text-center text-slate-500 text-xs">Loading documents...</div>
+            <div className="py-12 text-center text-slate-400 text-xs">Loading documents...</div>
           ) : recentDocs.length === 0 ? (
-            <div className="py-12 border border-dashed border-white/[0.08] rounded-2xl text-center p-6 space-y-3">
-              <UploadCloud className="w-8 h-8 text-slate-600 mx-auto" />
-              <p className="text-xs font-semibold text-slate-300">No documents uploaded yet</p>
+            <div className="py-12 border border-dashed border-slate-200 rounded-2xl text-center p-6 space-y-3">
+              <UploadCloud className="w-8 h-8 text-slate-400 mx-auto" />
+              <p className="text-xs font-semibold text-slate-700">No documents uploaded yet</p>
               <button
                 onClick={() => setUploadModalOpen(true)}
-                className="inline-flex items-center gap-2 text-xs font-semibold bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 px-4 py-2 rounded-xl hover:bg-indigo-600/30 transition"
+                className="inline-flex items-center gap-2 text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 px-4 py-2 rounded-xl hover:bg-indigo-100 transition"
               >
                 Upload Document
               </button>
             </div>
           ) : (
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               {recentDocs.map((doc) => (
                 <div
                   key={doc.id}
-                  className="flex items-center justify-between p-3.5 bg-[#0b0f19] border border-white/[0.06] rounded-2xl hover:border-white/[0.12] transition"
+                  className="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl hover:bg-slate-100/70 transition"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="p-2.5 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 shrink-0">
+                    <div className="p-2 bg-white border border-slate-200 rounded-lg text-slate-700 shrink-0 shadow-2xs">
                       <FileText className="w-4 h-4" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs font-semibold text-slate-200 truncate">
+                      <p className="text-xs font-semibold text-slate-900 truncate">
                         {doc.original_filename}
                       </p>
-                      <p className="text-[11px] text-slate-400 mt-0.5">
+                      <p className="text-[11px] text-slate-500 mt-0.5">
                         {doc.page_count ? `${doc.page_count} pages • ` : ''}
                         {formatFileSize(doc.file_size)}
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3 shrink-0">
+                  <div className="flex items-center gap-2 shrink-0">
                     {doc.status === 'completed' && (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                         <CheckCircle2 className="w-3 h-3" />
                         Ready
                       </span>
                     )}
 
                     {doc.status === 'processing' && (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 animate-pulse">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200 animate-pulse">
                         <Loader2 className="w-3 h-3 animate-spin" />
                         Processing
                       </span>
                     )}
 
                     {doc.status === 'failed' && (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-rose-50 text-rose-700 border border-rose-200">
                         <AlertCircle className="w-3 h-3" />
                         Failed
                       </span>
@@ -244,7 +242,7 @@ export const DashboardPage: React.FC = () => {
                     {doc.status === 'completed' && (
                       <button
                         onClick={() => navigate('/app/chat')}
-                        className="p-2 text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 rounded-xl transition"
+                        className="p-1.5 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition"
                         title="Chat with document"
                       >
                         <MessageSquare className="w-4 h-4" />
@@ -258,17 +256,17 @@ export const DashboardPage: React.FC = () => {
         </div>
 
         {/* Recent Conversations */}
-        <div className="glass-panel p-6 rounded-3xl border border-white/[0.08] space-y-4">
+        <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xs space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 bg-purple-500/10 text-purple-400 rounded-xl">
+              <div className="p-2 bg-indigo-50 text-indigo-600 rounded-xl border border-indigo-100">
                 <MessageSquare className="w-4 h-4" />
               </div>
-              <h2 className="text-base font-bold text-white">Recent Conversations</h2>
+              <h2 className="text-base font-bold text-slate-900">Recent Conversations</h2>
             </div>
             <button
               onClick={() => navigate('/app/history')}
-              className="text-xs text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1 transition"
+              className="text-xs text-indigo-600 hover:text-indigo-700 font-semibold flex items-center gap-1 transition"
             >
               <span>View all</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -276,42 +274,42 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           {loading ? (
-            <div className="py-12 text-center text-slate-500 text-xs">Loading conversations...</div>
+            <div className="py-12 text-center text-slate-400 text-xs">Loading conversations...</div>
           ) : recentConvs.length === 0 ? (
-            <div className="py-12 border border-dashed border-white/[0.08] rounded-2xl text-center p-6 space-y-3">
-              <MessageSquare className="w-8 h-8 text-slate-600 mx-auto" />
-              <p className="text-xs font-semibold text-slate-300">No chat history yet</p>
+            <div className="py-12 border border-dashed border-slate-200 rounded-2xl text-center p-6 space-y-3">
+              <MessageSquare className="w-8 h-8 text-slate-400 mx-auto" />
+              <p className="text-xs font-semibold text-slate-700">No chat history yet</p>
               <button
                 onClick={() => navigate('/app/chat')}
-                className="inline-flex items-center gap-2 text-xs font-semibold bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-4 py-2 rounded-xl hover:from-indigo-500 hover:to-violet-500 transition shadow-md shadow-indigo-600/20"
+                className="inline-flex items-center gap-2 text-xs font-semibold bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-700 transition shadow-2xs"
               >
                 Start New Chat
               </button>
             </div>
           ) : (
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               {recentConvs.map((conv) => (
                 <div
                   key={conv.id}
                   onClick={() => navigate(`/app/chat?id=${conv.id}`)}
-                  className="flex items-center justify-between p-3.5 bg-[#0b0f19] border border-white/[0.06] rounded-2xl hover:border-indigo-500/40 cursor-pointer transition group"
+                  className="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl hover:bg-indigo-50/50 hover:border-indigo-200 cursor-pointer transition group"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="p-2.5 bg-indigo-500/10 border border-indigo-500/20 rounded-xl text-indigo-400 shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition">
+                    <div className="p-2 bg-white border border-slate-200 rounded-lg text-slate-700 shrink-0 shadow-2xs group-hover:text-indigo-600">
                       <MessageSquare className="w-4 h-4" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs font-semibold text-slate-200 truncate group-hover:text-indigo-300 transition">
+                      <p className="text-xs font-semibold text-slate-900 truncate group-hover:text-indigo-700 transition">
                         {conv.title}
                       </p>
-                      <p className="text-[11px] text-slate-400 mt-0.5">
+                      <p className="text-[11px] text-slate-500 mt-0.5">
                         {conv.message_count} messages •{' '}
                         {new Date(conv.updated_at).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
 
-                  <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition" />
+                  <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition" />
                 </div>
               ))}
             </div>
