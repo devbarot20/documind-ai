@@ -38,13 +38,19 @@ app = FastAPI(
 )
 
 # CORS
+cors_origins = settings.cors_origins_list
+for origin in ["https://documind-ai-gamma.vercel.app", "http://localhost:5173", "http://localhost:3000"]:
+    if origin not in cors_origins:
+        cors_origins.append(origin)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins_list,
+    allow_origins=cors_origins,
     allow_origin_regex=r"^https:\/\/.*\.vercel\.app$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # Include routers
@@ -61,3 +67,4 @@ async def health_check():
         "service": "DocuMind AI",
         "version": "1.0.0",
     }
+
