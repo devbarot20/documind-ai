@@ -13,7 +13,9 @@ _client: AsyncOpenAI | None = None
 def _get_client() -> AsyncOpenAI:
     global _client
     if _client is None:
-        api_key = settings.EMBEDDING_API_KEY or settings.LLM_API_KEY or "dummy-key"
+        api_key = settings.EMBEDDING_API_KEY
+        if not api_key or "your-openai" in api_key or "dummy" in api_key:
+            api_key = settings.LLM_API_KEY or "dummy-key"
         _client = AsyncOpenAI(
             api_key=api_key,
             base_url=settings.EMBEDDING_API_BASE_URL,
