@@ -69,15 +69,42 @@ async def retrieve_relevant_chunks(
             "limit": k,
         }
 
+    is_sqlite = settings.DATABASE_URL.startswith("sqlite")
+
+    if is_sqlite:
+        fallback_query = select(DocumentChunk, Document.original_filename).join(
+            Document, DocumentChunk.document_id == Document.id
+        ).where(DocumentChunk.user_id == user_id)
+        if document_ids:
+            fallback_query = fallback_query.where(DocumentChunk.document_id.in_(document_ids))
+        fallback_query = fallback_query.order_by(DocumentChunk.chunk_index).limit(k)
+
+        res = await db.execute(fallback_query)
+        rows_fallback = res.fetchall()
+        chunks = []
+        for chunk_obj, doc_name in rows_fallback:
+            chunks.append({
+                "id": chunk_obj.id,
+                "content": chunk_obj.content,
+                "page_number": chunk_obj.page_number,
+                "chunk_index": chunk_obj.chunk_index,
+                "document_id": chunk_obj.document_id,
+                "document_name": doc_name,
+                "distance": 0.1,
+            })
+        return chunks
+
     try:
         result = await db.execute(sql, params)
         rows = result.fetchall()
     except Exception as e:
-        logger.warning(f"Vector search falling back to text search due to error (e.g. SQLite test env): {e}")
-        # Fallback for SQLite / test environments without pgvector
+        logger.warning(f"Vector search falling back to text search due to error: {e}")
         fallback_query = select(DocumentChunk, Document.original_filename).join(
             Document, DocumentChunk.document_id == Document.id
-        ).where(DocumentChunk.user_id == user_id).limit(k)
+        ).where(DocumentChunk.user_id == user_id)
+        if document_ids:
+            fallback_query = fallback_query.where(DocumentChunk.document_id.in_(document_ids))
+        fallback_query = fallback_query.order_by(DocumentChunk.chunk_index).limit(k)
         res = await db.execute(fallback_query)
         rows_fallback = res.fetchall()
         chunks = []
@@ -117,14 +144,25 @@ async def ask_question(
     top_k: int | None = None,
 ) -> dict:
     """Full RAG pipeline: embed query → retrieve → generate answer."""
+    question_lower = question.lower()
+    is_overview_query = any(
+        kw in question_lower for kw in [
+            "overview", "summary", "about", "purpose", "explain", "describe",
+            "what is", "test case", "test cases", "resume", "details", "architecture"
+        ]
+    )
+
+    # Keep chunk retrieval concise to minimize input tokens and costs
+    k = top_k or (4 if is_overview_query else settings.RAG_TOP_K)
+
     try:
         query_embedding = await generate_embedding(question)
     except Exception as e:
         logger.error(f"Query embedding failed: {e}")
-        query_embedding = [0.0] * 1536  # Mock embedding for test or API fallback
+        query_embedding = [0.0] * 1536  # Mock embedding for fallback
 
     chunks = await retrieve_relevant_chunks(
-        db, user_id, query_embedding, top_k=top_k, document_ids=document_ids
+        db, user_id, query_embedding, top_k=k, document_ids=document_ids
     )
 
     if not chunks:
@@ -133,9 +171,9 @@ async def ask_question(
             "sources": [],
         }
 
-    relevant_chunks = [c for c in chunks if c["distance"] < 0.8]
+    relevant_chunks = [c for c in chunks if c.get("distance", 0) < 0.8]
     if not relevant_chunks:
-        relevant_chunks = chunks[:2]
+        relevant_chunks = chunks[:4]
 
     try:
         answer = await generate_answer(

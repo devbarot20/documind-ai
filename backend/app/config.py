@@ -14,15 +14,15 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     JWT_EXPIRATION_MINUTES: int = 1440  # 24 hours
 
-    # LLM Configuration
+    # LLM Configuration (OpenRouter / OpenAI-compatible)
     LLM_API_KEY: str = ""
-    LLM_API_BASE_URL: str = "https://api.openai.com/v1"
-    LLM_MODEL: str = "gpt-4o-mini"
+    LLM_API_BASE_URL: str = "https://openrouter.ai/api/v1"
+    LLM_MODEL: str = "openai/gpt-4o-mini"
 
-    # Embedding Configuration
+    # Embedding Configuration (OpenRouter)
     EMBEDDING_API_KEY: str = ""
-    EMBEDDING_API_BASE_URL: str = "https://api.openai.com/v1"
-    EMBEDDING_MODEL: str = "text-embedding-3-small"
+    EMBEDDING_API_BASE_URL: str = "https://openrouter.ai/api/v1"
+    EMBEDDING_MODEL: str = "openai/text-embedding-3-small"
     EMBEDDING_DIMENSIONS: int = 1536
 
     # CORS
